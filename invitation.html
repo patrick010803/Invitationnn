@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>A Little Question 💗</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 20% 15%, rgba(255,255,255,.55) 0 2px, transparent 3px),
+      radial-gradient(circle at 80% 30%, rgba(255,255,255,.55) 0 2px, transparent 3px),
+      linear-gradient(#f58fbc, #f8b8d3 58%, #ef72aa);
+    color: #a91651;
+    font-family: "Press Start 2P", monospace;
+  }
+
+  body::before {
+    content: "♡  ✦  +  ✧  ♡  ✦  +  ✧  ♡";
+    position: fixed;
+    inset: 8% 0 auto;
+    width: 100%;
+    text-align: center;
+    color: rgba(255,255,255,.75);
+    font-size: clamp(12px, 3vw, 22px);
+    letter-spacing: 14px;
+    pointer-events: none;
+  }
+
+  .clouds {
+    position: fixed;
+    left: -5%;
+    right: -5%;
+    bottom: 0;
+    height: 28%;
+    background:
+      radial-gradient(ellipse at 8% 75%, #fff 0 8%, transparent 8.5%),
+      radial-gradient(ellipse at 18% 62%, #fff 0 12%, transparent 12.5%),
+      radial-gradient(ellipse at 30% 78%, #fff 0 10%, transparent 10.5%),
+      radial-gradient(ellipse at 44% 67%, #fff 0 13%, transparent 13.5%),
+      radial-gradient(ellipse at 58% 78%, #fff 0 10%, transparent 10.5%),
+      radial-gradient(ellipse at 72% 65%, #fff 0 12%, transparent 12.5%),
+      radial-gradient(ellipse at 88% 76%, #fff 0 11%, transparent 11.5%);
+    opacity: .75;
+    pointer-events: none;
+  }
+
+  .screen {
+    min-height: 100vh;
+    width: 100%;
+    display: none;
+    place-items: center;
+    padding: 28px 18px 80px;
+    position: relative;
+    z-index: 2;
+  }
+  .screen.active { display: grid; }
+
+  .card {
+    width: min(92vw, 650px);
+    text-align: center;
+  }
+
+  .picture {
+    width: clamp(130px, 38vw, 205px);
+    height: clamp(130px, 38vw, 205px);
+    margin: 0 auto 24px;
+    display: grid;
+    place-items: center;
+    background: #fff5fb;
+    border: 6px solid #c91e62;
+    outline: 4px solid #ffd3e5;
+    box-shadow: 8px 8px 0 #8d1749;
+    border-radius: 14px;
+    font-size: clamp(65px, 17vw, 105px);
+    animation: float 2.5s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    50% { transform: translateY(-8px) rotate(1deg); }
+  }
+
+  h1 {
+    margin: 12px 0 18px;
+    font-size: clamp(25px, 7vw, 54px);
+    line-height: 1.35;
+    color: #c8175d;
+    text-shadow: 3px 3px #fff, 6px 6px rgba(141,23,73,.22);
+  }
+
+  .subtitle {
+    font-size: clamp(10px, 2.8vw, 16px);
+    line-height: 1.9;
+    color: #7d1d48;
+    margin: 0 auto 24px;
+    max-width: 580px;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  button, input, select {
+    font: inherit;
+  }
+
+  button {
+    border: 4px solid #b51c59;
+    border-radius: 12px;
+    padding: 15px 24px;
+    background: #fff5fa;
+    color: #a91651;
+    cursor: pointer;
+    box-shadow: 0 7px 0 #7f1743;
+    transition: transform .12s, box-shadow .12s;
+  }
+  button:active {
+    transform: translateY(5px);
+    box-shadow: 0 2px 0 #7f1743;
+  }
+  .yes {
+    background: #e51d70;
+    color: white;
+    border-color: #fff;
+    outline: 3px solid #b31758;
+    min-width: 145px;
+    font-size: 18px;
+  }
+  .no {
+    min-width: 105px;
+  }
+
+  .hint {
+    min-height: 24px;
+    margin-top: 22px;
+    font-size: 10px;
+    color: #8c1d4d;
+  }
+
+  .form-box {
+    width: min(92vw, 470px);
+    margin: 0 auto;
+    background: rgba(255,250,253,.9);
+    border: 4px solid #c51b60;
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: 8px 8px 0 #8d1749;
+  }
+
+  label {
+    display: block;
+    text-align: left;
+    font-size: 10px;
+    margin: 14px 0 8px;
+  }
+
+  input, select {
+    width: 100%;
+    border: 3px solid #c51b60;
+    border-radius: 9px;
+    padding: 14px;
+    background: white;
+    color: #8b1748;
+    outline: none;
+  }
+
+  .continue {
+    margin-top: 20px;
+    width: 100%;
+    background: #e51d70;
+    color: #fff;
+    border-color: #fff;
+  }
+
+  .final-note {
+    width: min(92vw, 600px);
+    background: rgba(255,250,253,.94);
+    border: 4px solid #c51b60;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 8px 8px 0 #8d1749;
+    font-size: 11px;
+    line-height: 2;
+  }
+
+  .tiny {
+    font-size: 8px;
+    opacity: .8;
+    margin-top: 20px;
+  }
+
+  .heart {
+    position: fixed;
+    bottom: -30px;
+    animation: rise linear forwards;
+    z-index: 5;
+    pointer-events: none;
+  }
+  @keyframes rise {
+    to { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+  }
+
+  @media (max-height: 650px) {
+    .screen { padding-top: 10px; }
+    .picture { width: 110px; height: 110px; font-size: 55px; margin-bottom: 14px; }
+    h1 { margin: 5px 0 10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="clouds"></div>
+
+<section id="s1" class="screen active">
+  <div class="card">
+    <div class="picture">🐱</div>
+    <h1 id="question">Will you go out with me?</h1>
+    <p class="subtitle">I have a tiny question for you... and I've been a little nervous to ask. 💗</p>
+    <div class="buttons">
+      <button class="yes" onclick="show('s2'); hearts()">YES ✦</button>
+      <button class="no" id="noBtn" onclick="moveNo()">NO</button>
+    </div>
+    <div class="hint" id="hint"></div>
+  </div>
+</section>
+
+<section id="s2" class="screen">
+  <div class="card">
+    <div class="picture">🧸💗</div>
+    <h1>YAY!</h1>
+    <p class="subtitle">I'm really happy you said yes. 🥹<br>Now let's make our little plan.</p>
+    <button class="continue" onclick="show('s3')">PRESS TO CONTINUE →</button>
+  </div>
+</section>
+
+<section id="s3" class="screen">
+  <div class="card">
+    <div class="picture">🐱👉👈</div>
+    <h1>PICK A DATE</h1>
+    <p class="subtitle">Choose a day for our cute little plan.</p>
+    <div class="form-box">
+      <label for="date">OUR DATE</label>
+      <input id="date" type="date">
+      <button class="continue" onclick="saveDate()">THIS DAY ✦</button>
+    </div>
+  </div>
+</section>
+
+<section id="s4" class="screen">
+  <div class="card">
+    <div class="picture">🐻💗</div>
+    <h1>PICK A PLAN</h1>
+    <p class="subtitle">What should we do together?</p>
+    <div class="form-box">
+      <label for="activity">CHOOSE ONE</label>
+      <select id="activity">
+        <option value="Surprise me 💗">Surprise me 💗</option>
+        <option value="Food trip 🍜">Food trip 🍜</option>
+        <option value="Coffee date ☕">Coffee date ☕</option>
+        <option value="Movie date 🎬">Movie date 🎬</option>
+        <option value="Walk + kwentuhan 🌷">Walk + kwentuhan 🌷</option>
+        <option value="Anything, as long as we're together 🥹">Anything, as long as we're together 🥹</option>
+      </select>
+      <button class="continue" onclick="finish()">THIS ONE ✦</button>
+    </div>
+  </div>
+</section>
+
+<section id="s5" class="screen">
+  <div class="card">
+    <div class="picture">🧸💕</div>
+    <h1>IT'S A DATE!</h1>
+    <div class="final-note">
+      <div><b>DATE:</b> <span id="finalDate">Our special day</span></div>
+      <div><b>PLAN:</b> <span id="finalActivity">Surprise me 💗</span></div>
+    </div>
+    <p class="subtitle" style="margin-top:25px;">
+      Thank you for giving me a chance. 💗<br>
+      I don't know exactly where this will go, but I'd really like to find out with you.
+    </p>
+    <p class="tiny">Made with a nervous heart by someone who really likes you. ♡</p>
+  </div>
+</section>
+
+<script>
+  // EDIT THESE TWO LINES if you want to personalize the opening.
+  const herName = ""; // Example: "Trisha"
+  const opening = herName ? `Will you go out with me, ${herName}?` : "Will you go out with me?";
+
+  document.getElementById("question").textContent = opening;
+
+  function show(id) {
+    document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+  }
+
+  let noClicks = 0;
+  const noMessages = [
+    "Are you sure? 🥺",
+    "Think againnn...",
+    "The NO button is shy 😭",
+    "Maybe press YES? 👉👈",
+    "I'll ask one more time... 💗"
+  ];
+
+  function moveNo() {
+    noClicks++;
+    const btn = document.getElementById("noBtn");
+    const hint = document.getElementById("hint");
+    hint.textContent = noMessages[Math.min(noClicks - 1, noMessages.length - 1)];
+
+    if (noClicks >= 2) {
+      const x = Math.random() * 180 - 90;
+      const y = Math.random() * 100 - 50;
+      btn.style.transform = `translate(${x}px, ${y}px)`;
+    }
+    if (noClicks >= 6) {
+      btn.textContent = "okay... YES? 🥹";
+      btn.onclick = () => { show("s2"); hearts(); };
+    }
+  }
+
+  function saveDate() {
+    const value = document.getElementById("date").value;
+    if (!value) {
+      alert("Pick a date first, please. 💗");
+      return;
+    }
+    const d = new Date(value + "T00:00:00");
+    document.getElementById("finalDate").textContent =
+      d.toLocaleDateString(undefined, { weekday:"short", month:"long", day:"numeric", year:"numeric" });
+    show("s4");
+  }
+
+  function finish() {
+    document.getElementById("finalActivity").textContent =
+      document.getElementById("activity").value;
+    show("s5");
+    hearts();
+    setInterval(hearts, 900);
+  }
+
+  function hearts() {
+    for (let i = 0; i < 8; i++) {
+      const h = document.createElement("div");
+      h.className = "heart";
+      h.textContent = ["♡","♥","💗","✦"][Math.floor(Math.random()*4)];
+      h.style.left = Math.random() * 100 + "vw";
+      h.style.fontSize = (14 + Math.random()*20) + "px";
+      h.style.animationDuration = (3 + Math.random()*3) + "s";
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 6500);
+    }
+  }
+</script>
+</body>
+</html>
